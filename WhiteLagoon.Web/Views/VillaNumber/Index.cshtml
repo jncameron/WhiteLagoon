@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WhiteLagoon.Domain.Entities.VillaNumber>
+@{
+    ViewData["Title"] = "Villa Numbers";
+}
+
+<div class="w-100 card border-0 p-4">
+    <div class="card-header bg-dark bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Villa Number List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body border p-4">
+        <div class="row pb-3">
+            <div class="col-6 offset-6 text-end">
+                <a asp-asp-controller="Villa" asp-action="Create" class="btn btn-secondary">
+                    <i class="bi bi-plus-circle-fill"></i> Add Villa Number
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Villa.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Villa_Number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SpecialDetails)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Villa.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Villa_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SpecialDetails)
+                        </td>
+                        <td>
+                            <a asp-controller="VillaNumber" asp-action="Update" asp-route-id="@item.Villa_Number" class="btn btn-secondary">
+                                <i class="bi bi-pencil-fill"></i>Update
+                            </a>
+                            <a asp-controller="VillaNumber" asp-action="Delete" asp-route-id="@item.Villa_Number" class="btn btn-danger">
+                                <i class="bi bi-trash-fill"></i>Delete
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

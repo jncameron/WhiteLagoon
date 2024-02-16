@@ -12,8 +12,8 @@ using WhiteLagoon.Infrastructure.Data;
 namespace WhiteLagoon.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240212223504_seedVillas")]
-    partial class seedVillas
+    [Migration("20240214222126_addVillaNumber")]
+    partial class addVillaNumber
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,8 @@ namespace WhiteLagoon.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Occupancy")
                         .HasColumnType("int");
@@ -93,6 +94,91 @@ namespace WhiteLagoon.Infrastructure.Migrations
                             Price = 400.0,
                             Sqft = 750
                         });
+                });
+
+            modelBuilder.Entity("WhiteLagoon.Domain.Entities.VillaNumber", b =>
+                {
+                    b.Property<int>("Villa_Number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SpecialDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VillaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Villa_Number");
+
+                    b.HasIndex("VillaId");
+
+                    b.ToTable("VillaNumbers");
+
+                    b.HasData(
+                        new
+                        {
+                            Villa_Number = 101,
+                            SpecialDetails = "Pool View",
+                            VillaId = 1
+                        },
+                        new
+                        {
+                            Villa_Number = 102,
+                            SpecialDetails = "Garden View",
+                            VillaId = 1
+                        },
+                        new
+                        {
+                            Villa_Number = 103,
+                            SpecialDetails = "Sea View",
+                            VillaId = 1
+                        },
+                        new
+                        {
+                            Villa_Number = 201,
+                            SpecialDetails = "Pool View",
+                            VillaId = 2
+                        },
+                        new
+                        {
+                            Villa_Number = 202,
+                            SpecialDetails = "Garden View",
+                            VillaId = 2
+                        },
+                        new
+                        {
+                            Villa_Number = 203,
+                            SpecialDetails = "Sea View",
+                            VillaId = 2
+                        },
+                        new
+                        {
+                            Villa_Number = 301,
+                            SpecialDetails = "Pool View",
+                            VillaId = 3
+                        },
+                        new
+                        {
+                            Villa_Number = 302,
+                            SpecialDetails = "Garden View",
+                            VillaId = 3
+                        },
+                        new
+                        {
+                            Villa_Number = 303,
+                            SpecialDetails = "Sea View",
+                            VillaId = 3
+                        });
+                });
+
+            modelBuilder.Entity("WhiteLagoon.Domain.Entities.VillaNumber", b =>
+                {
+                    b.HasOne("WhiteLagoon.Domain.Entities.Villa", "Villa")
+                        .WithMany()
+                        .HasForeignKey("VillaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Villa");
                 });
 #pragma warning restore 612, 618
         }
